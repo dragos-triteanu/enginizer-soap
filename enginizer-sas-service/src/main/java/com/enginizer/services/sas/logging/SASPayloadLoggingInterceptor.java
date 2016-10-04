@@ -16,7 +16,7 @@ import java.io.StringWriter;
 import java.util.UUID;
 
 /**
- * Created by CS94749 on 9/30/2016.
+ * Interceptor for logging the request/response payload exchange in SOAP format.
  */
 public class SASPayloadLoggingInterceptor extends TransformerObjectSupport implements EndpointInterceptor {
     private static final Logger LOG = LoggerFactory.getLogger(SASPayloadLoggingInterceptor.class);

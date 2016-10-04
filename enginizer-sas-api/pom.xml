@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.enginizer.services</groupId>
+	<artifactId>enginizer-sas-api</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>ENGINIZER :: SAS :: API</name>
+
+	<parent>
+		<groupId>com.enginizer.services</groupId>
+		<artifactId>enginizer-sas</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+    		<groupId>wsdl4j</groupId>
+    		<artifactId>wsdl4j</artifactId>
+			<version>${wsdl4java}</version>
+		</dependency>
+        <dependency>
+    		<groupId>com.sun.xml.bind</groupId>
+    		<artifactId>jaxb-impl</artifactId>
+    		<version>${jaxb2.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>jaxb2-maven-plugin</artifactId>
+			    <version>1.6</version>
+			    <executions>
+			        <execution>
+			            <id>xjc</id>
+			            <goals>
+			                <goal>xjc</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			    <configuration>
+			        <schemaDirectory>${project.basedir}/src/main/resources/com/enginizer/services/sas/xsd/</schemaDirectory>
+			        <outputDirectory>${project.build.directory}/generated-sources/xjc</outputDirectory>
+			        <clearOutputDir>true</clearOutputDir>
+			    </configuration>
+			</plugin>
+			<plugin>
+				<!-- We use this plugin to ensure that our usage of the
+                maven-jaxb2-plugin is JDK 8 compatible in absence of a fix
+                for https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-80. -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<!--
+                <version>1.0-alpha-2</version> -->
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<id>set-additional-system-properties</id>
+						<goals>
+							<goal>set-system-properties</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<properties>
+						<property>
+							<name>javax.xml.accessExternalSchema</name>
+							<value>all</value>
+						</property>
+					</properties>
+				</configuration>
+			</plugin>
+			<plugin>
+	    		<groupId>org.codehaus.mojo</groupId>
+	    		<artifactId>build-helper-maven-plugin</artifactId>
+	    		<executions>
+	        		<execution>
+	            		<id>add-source</id>
+	            		<phase>generate-sources</phase>
+	            		<goals>
+	                		<goal>add-source</goal>
+	            		</goals>
+	            		<configuration>
+	                		<sources>
+	                    		<source>${project.build.directory}/generated-sources/xjc/</source>
+	                		</sources>
+	            		</configuration>
+	        		</execution>
+	    		</executions>
+	 		</plugin>
+
+			<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<configuration>
+					<!-- Enable this to push to origin using SSH keys -->
+					<enableSshAgent>true</enableSshAgent>
+					<!-- Keep your maven submodules at the same version as the parent POM -->
+					<autoVersionSubmodules>false</autoVersionSubmodules>
+					<!-- Pusing in-development features to origin allows all devs to see
+						what each other are working on -->
+					<pushFeatures>true</pushFeatures>
+					<!-- This allows the CI server (e.g. Jenkins) to automatically push
+						new releases to origin; you can then either manually deploy them or, if you
+						are doing Continuous Deployments, auto-deploy them to prod -->
+					<pushReleases>false</pushReleases>
+					<flowInitContext>
+						<masterBranchName>master</masterBranchName>
+						<developBranchName>dvlp</developBranchName>
+						<featureBranchPrefix>feature-</featureBranchPrefix>
+						<releaseBranchPrefix>${project.artifactId}-release-</releaseBranchPrefix>
+						<hotfixBranchPrefix>${project.artifactId}-hotfix-</hotfixBranchPrefix>
+						<versionTagPrefix>${project.artifactId}-version-</versionTagPrefix>
+					</flowInitContext>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

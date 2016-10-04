@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified"
+           targetNamespace="http://www.enginizer.com/services/sas/v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://www.enginizer.com/services/sas/v1">
+
+    <!-- LOGIN OPERATION -->
+
+    <xs:element name="loginRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="principal" type="tns:principal"/>
+                <xs:element name="legitimation" type="tns:legitimation">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xs:element name="Description">
+                                the password or any other legitimation data (like biometric data or RSA keys which is used to authentificate a user.
+                            </xs:element>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="frontendID" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xs:element name="Description">
+                                a string to identify the frontend which is used by the user. e.g. TBS, Internet
+                            </xs:element>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="loginResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:reply">
+                    <xs:sequence>
+                        <xs:element name="attemptsLeft" type="xs:int" minOccurs="0" />
+                        <xs:element name="sessionToken" type="xs:string" minOccurs="0" />
+                        <xs:element name="roles" type="tns:roles" minOccurs="0" />
+                        <xs:element name="sessionTimeout" type="xs:int" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="roles">
+        <xs:sequence>
+            <xs:element name="role" type="tns:userRole" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">
+                            Vector with entries of type User role which are the users product independent role assignments
+                        </xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="userRole">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">
+                            the role type which determines if this is an employee or an client specific role. This role type is used to determine if roles should be loaded product
+                            specific or non product specific for clients. All roles starting with the string CLIENT_ are loaded non product specific for clients.
+                        </xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- LOGOUT OPERATION -->
+
+    <xs:element name="logoutRequest">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>
+                    <xs:element name="Description">
+                        /**
+                        * log out from the system and indicate if the user himself or someone other issued the logout.
+                        *
+                        * @param sessionToken a valid sessionToken which is invalidated in this call
+                        * @param who the who
+                        * @return 0 on success, otherwise a error code is returned in which's case the zaas documentation should be consulted.
+                        */
+                    </xs:element>
+                </xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="sessionToken" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="logoutResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:reply" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- VERIFY SESSION OPERATION-->
+
+    <xs:element name="verifySessionRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sessionToken" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="verifySessionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:reply">
+                    <xs:sequence>
+                        <xs:element name="isValid" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- COMMONS -->
+
+    <xs:complexType name="principal">
+        <xs:sequence>
+            <xs:element name="principalData" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">id string used to identify a user.</xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="principalType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">principal type used to determine the type of the id string.</xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="legitimation">
+        <xs:sequence>
+            <xs:element name="legitimationData" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">a byte vector containing the legitimation data.</xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="type" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">the type of the legitimationData.</xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="reply">
+        <xs:sequence>
+            <xs:element name="correlationId" type="xs:string" minOccurs="0"/>
+            <xs:element name="returnCode" type="xs:int" minOccurs="0"/>
+            <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+            <xs:element name="reasonCode" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">reason code like: restricted mode.</xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="errorCounter" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        <xs:element name="Description">the current errorCounter.</xs:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

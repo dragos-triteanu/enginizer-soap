@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SASV1"
+	targetNamespace="http://www.enginizer.com/services/sas/v1"
+    xmlns:tns="http://www.enginizer.com/services/sas/v1"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">
+
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.enginizer.com/services/sas/v1/imports">
+			<xs:import schemaLocation="SASV1Schema.xsd" namespace="http://www.enginizer.com/services/sas/v1"/>
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="loginRequest">
+		<wsdl:part name="parameters" element="tns:loginRequest" />
+	</wsdl:message>
+	<wsdl:message name="loginResponse">
+		<wsdl:part name="parameters" element="tns:loginResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="logoutRequest">
+		<wsdl:part name="parameters" element="tns:logoutRequest"/>
+	</wsdl:message>
+	<wsdl:message name="logoutResponse">
+		<wsdl:part name="parameters" element="tns:logoutResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="verifySessionRequest">
+		<wsdl:part name="parameters" element="tns:verifySessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="verifySessionResponse">
+		<wsdl:part name="parameters" element="tns:verifySessionResponse"/>
+	</wsdl:message>
+
+
+	<wsdl:portType name="SASV1">
+		<wsdl:operation name="login">
+			<wsdl:input name="loginRequest" message="tns:loginRequest" wsaw:Action="wsdl/1.0/loginRequest" />
+			<wsdl:output name="loginResponse" message="tns:loginResponse"	wsaw:Action="wsdl/1.0/loginResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="logout">
+			<wsdl:input name="logoutRequest" message="tns:logoutRequest" wsaw:Action="wsdl/1.0/logoutRequest" />
+			<wsdl:output name="logoutResponse" message="tns:logoutResponse" wsaw:Action="wsdl/1.0/logoutResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="verifySession">
+			<wsdl:input name="verifySessionRequest" message="tns:verifySessionRequest" wsaw:Action="wsdl/1.0/verifySessionRequest" />
+			<wsdl:output name="verifySessionResponse" message="tns:verifySessionResponse" wsaw:Action="wsdl/1.0/verifySessionResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="SASV1_Binding" type="tns:SASV1">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="login">
+			<soap:operation soapAction="wsdl/1.0/login" style="document" />
+			<wsdl:input name="loginRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="loginResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="logout">
+			<soap:operation soapAction="wsdl/1.0/logout" style="document"/>
+			<wsdl:input name="logoutRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="logoutResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="verifySession">
+			<soap:operation soapAction="wsdl/1.0/verifySession" style="document"/>
+			<wsdl:input name="verifySessionRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="verifySessionResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="SASV1">
+		<wsdl:port name="SASV1" binding="tns:SASV1_Binding">
+			<soap:address location="http://localhost:8080/services/sas/v1" />
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

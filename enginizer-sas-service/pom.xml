@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.enginizer.services</groupId>
+	<artifactId>enginizer-sas-service</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>ENGINIZER :: SAS :: SERVICE</name>
+
+	<parent>
+		<groupId>com.enginizer.services</groupId>
+		<artifactId>enginizer-sas</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<sas.api.version>1.0.0-SNAPSHOT</sas.api.version>
+		<sas.commons.version>1.0.0-SNAPSHOT</sas.commons.version>
+		<mysql.version>5.1.37</mysql.version>
+		<mockito.version>1.9.5</mockito.version>
+		<mtan.library.version>1.0.6</mtan.library.version>
+		<spring.security.version>4.0.4.RELEASE</spring.security.version>
+		<tomcat.version>8.0.18</tomcat.version>
+		<jackson.dataformat.version>2.7.5</jackson.dataformat.version>
+		<commons.lang.version>3.4</commons.lang.version>
+	</properties>
+	
+	<packaging>war</packaging>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.enginizer.services</groupId>
+			<artifactId>enginizer-sas-api</artifactId>
+			<version>${sas.api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enginizer.services</groupId>
+			<artifactId>enginizer-sas-commons</artifactId>
+			<version>${sas.commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-ws</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+
+		<!-- Unit Testing -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework</groupId>
+   		 	<artifactId>spring-test</artifactId>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${jackson.dataformat.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<configuration>
+					<!-- Enable this to push to origin using SSH keys -->
+					<enableSshAgent>true</enableSshAgent>
+					<!-- Keep your maven submodules at the same version as the parent POM -->
+					<autoVersionSubmodules>false</autoVersionSubmodules>
+					<!-- Pusing in-development features to origin allows all devs to see
+						what each other are working on -->
+					<pushFeatures>true</pushFeatures>
+					<!-- This allows the CI server (e.g. Jenkins) to automatically push
+						new releases to origin; you can then either manually deploy them or, if you
+						are doing Continuous Deployments, auto-deploy them to prod -->
+					<pushReleases>false</pushReleases>
+					<flowInitContext>
+						<masterBranchName>master</masterBranchName>
+						<developBranchName>dvlp</developBranchName>
+						<featureBranchPrefix>feature-</featureBranchPrefix>
+						<releaseBranchPrefix>${project.artifactId}-release-</releaseBranchPrefix>
+						<hotfixBranchPrefix>${project.artifactId}-hotfix-</hotfixBranchPrefix>
+						<versionTagPrefix>${project.artifactId}-version-</versionTagPrefix>
+					</flowInitContext>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

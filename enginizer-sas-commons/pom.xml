@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.enginizer.services</groupId>
+	<artifactId>enginizer-sas-commons</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>ENGINIZER :: SAS :: COMMONS</name>
+
+    <parent>
+        <groupId>com.enginizer.services</groupId>
+        <artifactId>enginizer-sas</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+	<properties>
+        <java.version>1.8</java.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+		<spring.security.version>4.0.4.RELEASE</spring.security.version>
+		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+		<srping.data.jpa.version>1.3.3.RELEASE</srping.data.jpa.version>
+		<generex.version>1.0.1</generex.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
+        <maven-jgitflow-plugin-version>1.0-m5.1</maven-jgitflow-plugin-version>
+        <maven-compiler-plugin-version>3.5.1</maven-compiler-plugin-version>
+	</properties>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${hibernate.jpa.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${srping.data.jpa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${javax.mail.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Used for generating random character sequence -->
+        <dependency>
+            <groupId>com.github.mifmif</groupId>
+            <artifactId>generex</artifactId>
+            <version>${generex.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>${maven-jgitflow-plugin-version}</version>
+                <configuration>
+                    <!-- Enable this to push to origin using SSH keys -->
+                    <enableSshAgent>true</enableSshAgent>
+                    <!-- Keep your maven submodules at the same version as the parent POM -->
+                    <autoVersionSubmodules>false</autoVersionSubmodules>
+                    <!-- Pusing in-development features to origin allows all devs to see
+                        what each other are working on -->
+                    <pushFeatures>true</pushFeatures>
+                    <!-- This allows the CI server (e.g. Jenkins) to automatically push
+                        new releases to origin; you can then either manually deploy them or, if you
+                        are doing Continuous Deployments, auto-deploy them to prod -->
+                    <pushReleases>false</pushReleases>
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>dvlp</developBranchName>
+                        <featureBranchPrefix>feature-</featureBranchPrefix>
+                        <releaseBranchPrefix>${project.artifactId}-release-</releaseBranchPrefix>
+                        <hotfixBranchPrefix>${project.artifactId}-hotfix-</hotfixBranchPrefix>
+                        <versionTagPrefix>${project.artifactId}-version-</versionTagPrefix>
+                    </flowInitContext>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -35,6 +35,9 @@
 		<wsdl:part name="parameters" element="tns:verifySessionResponse"/>
 	</wsdl:message>
 
+	<wsdl:message name="techHeader">
+		<wsdl:part name="techHeader" element="tns:techHeader"/>
+	</wsdl:message>
 
 	<wsdl:portType name="SASV1">
 		<wsdl:operation name="login">
@@ -56,27 +59,33 @@
 		<wsdl:operation name="login">
 			<soap:operation soapAction="wsdl/1.0/login" style="document" />
 			<wsdl:input name="loginRequest">
+				<soap:header message="tns:techHeader" part="techHeader" use="literal"/>
 				<soap:body use="literal" />
 			</wsdl:input>
 			<wsdl:output name="loginResponse">
+				<soap:header message="tns:techHeader" part="techHeader" use="literal"/>
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="logout">
 			<soap:operation soapAction="wsdl/1.0/logout" style="document"/>
 			<wsdl:input name="logoutRequest">
+				<soap:header message="tns:techHeader" part="techHeader" use="literal"/>
 				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output name="logoutResponse">
+				<soap:header message="tns:techHeader" part="techHeader" use="literal"/>
 				<soap:body use="literal"/>
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="verifySession">
 			<soap:operation soapAction="wsdl/1.0/verifySession" style="document"/>
 			<wsdl:input name="verifySessionRequest">
+				<soap:header message="tns:techHeader" part="techHeader" use="literal"/>
 				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output name="verifySessionResponse">
+				<soap:header message="tns:techHeader" part="techHeader" use="literal"/>
 				<soap:body use="literal"/>
 			</wsdl:output>
 		</wsdl:operation>

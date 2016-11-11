@@ -29,7 +29,6 @@ public class LoginResponseConverter implements ResponseConverter<LoginResponse, 
         dto.setReasonCode(loginResponse.getReasonCode());
         dto.setErrorMessage(loginResponse.getErrorMessage());
         dto.setSessionTimeout(loginResponse.getSessionTimeout());
-        dto.setCorrelationId(loginResponse.getCorrelationId());
 
         if (null != loginResponse.getRoles()) {
             Set<UserRoleDTO> userRoleDTO = new HashSet<>();

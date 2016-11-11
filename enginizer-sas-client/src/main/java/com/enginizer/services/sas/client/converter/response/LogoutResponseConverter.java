@@ -20,7 +20,6 @@ public class LogoutResponseConverter implements ResponseConverter<LogoutResponse
         dto.setReturnCode(logoutResponse.getReturnCode());
         dto.setErrorCounter(logoutResponse.getErrorCounter());
         dto.setErrorMessage(logoutResponse.getErrorMessage());
-        dto.setCorrelationId(logoutResponse.getCorrelationId());
         return dto;
     }
 }

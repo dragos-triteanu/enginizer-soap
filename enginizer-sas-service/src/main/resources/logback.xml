@@ -53,7 +53,7 @@
     </appender>
 
 
-    <logger name="com.enginizer.services.sas.logging.SASPayloadLoggingInterceptor" level="debug" additivity="false">
+    <logger name="com.enginizer.services.sas.logging.SASPayloadInterceptor" level="debug" additivity="false">
         <appender-ref ref="REQUEST-APPENDER" />
     </logger>
 

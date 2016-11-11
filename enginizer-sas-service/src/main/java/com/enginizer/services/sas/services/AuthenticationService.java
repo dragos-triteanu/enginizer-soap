@@ -56,10 +56,6 @@ public class AuthenticationService {
     @Transactional
     public LoginResponse login(LoginRequest loginRequest) {
 
-        if(true){
-            throw new IllegalArgumentException("Sticky session");
-        }
-
         // retrieve principal
         Principal principal = retrievePrincipal(loginRequest.getPrincipal().getPrincipalData(),
                 loginRequest.getPrincipal().getPrincipalType());

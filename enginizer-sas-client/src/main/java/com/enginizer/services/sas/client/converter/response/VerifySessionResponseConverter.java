@@ -17,7 +17,6 @@ public class VerifySessionResponseConverter implements ResponseConverter<VerifyS
     @Override
     public VerifySessionResponseDTO from(VerifySessionResponse verifySessionResponse) {
         VerifySessionResponseDTO verifySessionResponseDTO = new VerifySessionResponseDTO(verifySessionResponse.isIsValid());
-        verifySessionResponseDTO.setCorrelationId(verifySessionResponse.getCorrelationId());
         return verifySessionResponseDTO;
     }
 }

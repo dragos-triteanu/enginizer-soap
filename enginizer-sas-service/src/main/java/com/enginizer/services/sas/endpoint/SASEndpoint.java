@@ -1,7 +1,7 @@
 package com.enginizer.services.sas.endpoint;
 
 import com.enginizer.services.sas.exception.SASServiceException;
-import com.enginizer.services.sas.logging.SASPayloadLoggingInterceptor;
+import com.enginizer.services.sas.logging.SASPayloadInterceptor;
 import com.enginizer.services.sas.services.AuthenticationService;
 import com.enginizer.services.sas.services.MTANService;
 import com.enginizer.services.sas.services.SessionService;
@@ -47,7 +47,6 @@ public class SASEndpoint {
         LoginResponse response = new LoginResponse();
         try {
             response = authenticationService.login(request);
-            response.setCorrelationId((String) messageContext.getProperty(SASPayloadLoggingInterceptor.CORRELATION_ID));
         } catch (Exception e) {
             handleException(messageContext, e);
         }
@@ -60,7 +59,6 @@ public class SASEndpoint {
         LogoutResponse response = new LogoutResponse();
         try {
             response = authenticationService.logout(request);
-            response.setCorrelationId((String) messageContext.getProperty(SASPayloadLoggingInterceptor.CORRELATION_ID));
         } catch (Exception e) {
             handleException(messageContext, e);
         }
@@ -74,7 +72,6 @@ public class SASEndpoint {
         VerifySessionResponse response = new VerifySessionResponse();
         try {
             response = sessionService.verifySession(request);
-            response.setCorrelationId((String) messageContext.getProperty(SASPayloadLoggingInterceptor.CORRELATION_ID));
         } catch (Exception e) {
             handleException(messageContext, e);
         }
@@ -103,7 +100,7 @@ public class SASEndpoint {
      * @param e              the thrown exception.
      */
     private void handleException(MessageContext messageContext, Exception e) {
-        String errorTag = "Error(" + messageContext.getProperty(SASPayloadLoggingInterceptor.CORRELATION_ID) + ")";
+        String errorTag = "Error(" + messageContext.getProperty(SASPayloadInterceptor.CORRELATION_ID) + ")";
         LOG.error(errorTag + ": ", e);
         throw new SASServiceException(errorTag);
     }

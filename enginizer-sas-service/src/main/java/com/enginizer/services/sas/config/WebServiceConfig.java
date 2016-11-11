@@ -1,6 +1,6 @@
 package com.enginizer.services.sas.config;
 
-import com.enginizer.services.sas.logging.SASPayloadLoggingInterceptor;
+import com.enginizer.services.sas.logging.SASPayloadInterceptor;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.server.EndpointInterceptor;
-import org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor;
 import org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping;
 import org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
@@ -61,8 +60,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    public SASPayloadLoggingInterceptor payloadLoggingInterceptor() {
-        return new SASPayloadLoggingInterceptor();
+    public SASPayloadInterceptor payloadLoggingInterceptor() {
+        return new SASPayloadInterceptor();
     }
 
     @Bean
